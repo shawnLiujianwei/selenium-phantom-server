@@ -1,0 +1,34 @@
+{
+  "name": "selenium-phantom-server",
+  "version": "1.0.0",
+  "description": "manage phantom pool for selenium-webdriver",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shawnLiujianwei/selenium-phantom-server.git"
+  },
+  "keywords": [
+    "phantom",
+    "selinium-webdriver"
+  ],
+  "author": "Shawn Liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shawnLiujianwei/selenium-phantom-server/issues"
+  },
+  "homepage": "https://github.com/shawnLiujianwei/selenium-phantom-server",
+  "dependencies": {
+    "bluebird": "^2.10.2",
+    "body-parser": "^1.14.1",
+    "config": "^1.16.0",
+    "express": "^4.13.3",
+    "freeport": "^1.0.5",
+    "lodash": "^3.10.1",
+    "log4js": "^0.6.27",
+    "morgan": "^1.6.1",
+    "selenium-webdriver": "^2.47.0"
+  }
+}
