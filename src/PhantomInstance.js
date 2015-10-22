@@ -46,7 +46,7 @@ PhantomInstance.prototype.borrow = function () {
     this.timeout = setTimeout(function () {
         self.release("PhantomInstance on port " + self.port + " been released by maxWait '" + self.maxWait / 1000 + "s'");
     }, self.maxWait);
-    return Promise.resolve(this);
+    return self.ping();
 }
 
 PhantomInstance.prototype.restart = function () {
@@ -90,7 +90,7 @@ PhantomInstance.prototype.ping = function () {
             })
             .endAll()
             .then(function () {
-                resolve();
+                resolve(self);
             })
     })
 }
