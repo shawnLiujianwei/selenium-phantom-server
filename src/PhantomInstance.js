@@ -7,7 +7,7 @@ var delay = require("./lib/delayPromise");
 var Process = require("child_process");
 var logger = require("log4js").getLogger("src/PhantomInstance.js");
 var Utils = require("./lib/utils");
-var webdriver = require('selenium-webdriver');
+var webdriverio = require('webdriverio');
 var PhantomInstance = function (port, timeout) {
     this.listening = false;
     this.port = port;
@@ -20,6 +20,8 @@ PhantomInstance.prototype.start = function () {
         .then(function () {
             var args = [];
             args.push("phantomjs");
+            args.push("--ignore-ssl-errors=true");
+            args.push("");
             args.push("--webdriver=" + self.port);
             var cp = Process.spawn(args.shift(), args);
             //cp.stdout.pipe(process.stdout);
@@ -30,10 +32,11 @@ PhantomInstance.prototype.start = function () {
             cp.stderr.on("data", function (data) {
                 self.log(data)
             });
-            return delay(100)
-                .then(function () {
-                    return self;
-                })
+            //return delay(100)
+            //    .then(function () {
+            //        return self;
+            //    })
+            return self.ping();
         });
 }
 
@@ -73,15 +76,22 @@ PhantomInstance.prototype.ping = function () {
     var self = this;
 
     return new Promise(function (resolve, reject) {
-        var driver = new webdriver.Builder()
-            .forBrowser('firefox')
-            .usingServer('http://127.0.0.1:' + self.port)
-            .build()
-            .catch(function (err) {
-                logger.error(err);
-                reject(err.stack);
-            });
-        resolve();
+        var options = {
+            "host": "127.0.0.1",
+            "port": self.port
+        };
+        webdriverio
+            .remote(options)
+            .init(function (err, data) {
+                if (err) {
+                    logger.error(err);
+                    reject(err);
+                }
+            })
+            .endAll()
+            .then(function () {
+                resolve();
+            })
     })
 }
 

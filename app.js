@@ -69,7 +69,18 @@ app.get("/release/:port", function (req, res) {
         .catch(function (err) {
             logger.error(err);
             res.json(err.stack || err.message || err);
+        });
+});
+app.get("/restart/:port", function (req, res) {
+    var port = req.params.port;
+    phantomPool.restart(port)
+        .then(function (msg) {
+            res.json(msg);
         })
+        .catch(function (err) {
+            logger.error(err);
+            res.json(err.stack || err.message || err);
+        });
 });
 
 app.get("/status", function (req, res) {

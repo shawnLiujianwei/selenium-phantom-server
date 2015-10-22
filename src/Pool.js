@@ -57,6 +57,22 @@ Pool.prototype.release = function (port) {
 
 }
 
+Pool.prototype.restart = function (port) {
+    var self = this;
+    try {
+        port = parseInt(port);
+        var instance = _.find(self.instanceList, {"port": port});
+        if (instance) {
+            return instance.restart();
+        } else {
+            instance = new PhantomInstance(port, self.timeout);
+            return instance.start();
+        }
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}
+
 Pool.prototype.init = function () {
     var self = this;
     var promiseArray = [];
