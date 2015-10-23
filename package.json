@@ -1,6 +1,6 @@
 {
   "name": "selenium-phantom-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "manage phantom pool for selenium-webdriver",
   "main": "app.js",
   "scripts": {
